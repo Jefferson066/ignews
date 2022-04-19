@@ -5,7 +5,7 @@ import { stripe } from '../services/stripe'
 
 import styles from './home.module.scss';
 
-interface IHomeProps{
+interface IHomeProps {
   product: {
     priceId: string,
     amount: number
@@ -27,7 +27,7 @@ export default function Home({ product }: IHomeProps) {
             Get acess to all the publications <br />
             <span>for {product.amount} month</span>
           </p>
-          <SubscribeButton priceId={product.priceId}/>
+          <SubscribeButton priceId={product.priceId} />
         </section>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/avatar.svg" alt="Girl coding" />
@@ -37,8 +37,8 @@ export default function Home({ product }: IHomeProps) {
   )
 }
 
-export const getStaticProps: GetStaticProps= async()=>{
-  const price = await stripe.prices.retrieve('price_1KBjKQIskyRsMZKq2qAE7b5e',{
+export const getStaticProps: GetStaticProps = async () => {
+  const price = await stripe.prices.retrieve('price_1KBjKQIskyRsMZKq2qAE7b5e', {
     expand: ['product']
   })
   const product = {
@@ -48,13 +48,13 @@ export const getStaticProps: GetStaticProps= async()=>{
       currency: 'USD',
     }).format(price.unit_amount / 100),
 
-   
+
   }
 
-  return{
-    props:{
+  return {
+    props: {
       product
     },
-    revalidate: 60*60*24,
+    revalidate: 60 * 60 * 24,
   }
 }
